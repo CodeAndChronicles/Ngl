@@ -1,0 +1,2194 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>  | Anonymous Message</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #8A2BE2;
+            --secondary: #4B0082;
+            --accent: #9370DB;
+            --success: #00C897;
+            --danger: #FF6B6B;
+            --warning: #FFD166;
+            --dark: #1A1A2E;
+            --light: #FFFFFF;
+            --text: #2D3047;
+            --text-light: #6C757D;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --input-bg: rgba(248, 249, 250, 0.9);
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: var(--transition);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        /*  */
+        body.theme-dark {
+            --primary: #6A0DAD;
+            --secondary: #4B0082;
+            --accent: #8A2BE2;
+            --dark: #0F0F1E;
+            --light: #1A1A2E;
+            --text: #E2E2E2;
+            --text-light: #A0A0A0;
+            --card-bg: rgba(45, 48, 71, 0.85);
+            --input-bg: rgba(52, 58, 64, 0.9);
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --glass-bg: rgba(30, 30, 46, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body.theme-blue {
+            --primary: #3498DB;
+            --secondary: #2C3E50;
+            --accent: #2980B9;
+        }
+
+        body.theme-pink {
+            --primary: #E84393;
+            --secondary: #FD79A8;
+            --accent: #D63031;
+        }
+
+        body.theme-green {
+            --primary: #00C897;
+            --secondary: #009975;
+            --accent: #00A885;
+        }
+
+        body.theme-sunset {
+            --primary: #FF6B6B;
+            --secondary: #FF8E53;
+            --accent: #FFA36C;
+        }
+
+        body.theme-neon {
+            --primary: #00F5FF;
+            --secondary: #AD00FF;
+            --accent: #FF00E6;
+        }
+
+        /*    */
+        body.time-morning {
+            background: linear-gradient(135deg, #FF9A8B 0%, #FF6A88 55%, #FF99AC 100%);
+        }
+
+        body.time-afternoon {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        body.time-evening {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        body.time-night {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+        }
+
+        .container {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow), 15px 15px 30px var(--shadow-color);
+            width: 100%;
+            max-width: 550px;
+            padding: 30px;
+            text-align: center;
+            transition: var(--transition);
+            animation: containerSlideIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+            border-radius: 30px 30px 0 0;
+            animation: rainbow 8s linear infinite;
+        }
+
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes containerSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .header {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: float 4s ease-in-out infinite;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            color: var(--text);
+            margin-bottom: 8px;
+            font-weight: 800;
+            font-size: 2rem;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            color: var(--text-light);
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+
+        .theme-selector {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .theme-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: inherit;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .theme-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            z-index: 2;
+            transition: var(--transition);
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+
+        .theme-btn.active {
+            transform: scale(1.15);
+            border-color: white;
+            box-shadow: 0 0 0 3px white, 0 8px 20px rgba(0,0,0,0.4);
+        }
+
+        .theme-btn.active::after {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .theme-default { background: linear-gradient(135deg, #8A2BE2 0%, #4B0082 100%); }
+        .theme-dark { background: linear-gradient(135deg, #6A0DAD 0%, #4B0082 100%); }
+        .theme-blue { background: linear-gradient(135deg, #3498DB 0%, #2C3E50 100%); }
+        .theme-pink { background: linear-gradient(135deg, #E84393 0%, #FD79A8 100%); }
+        .theme-green { background: linear-gradient(135deg, #00C897 0%, #009975 100%); }
+        .theme-sunset { background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%); }
+        .theme-neon { background: linear-gradient(135deg, #00F5FF 0%, #AD00FF 100%); }
+
+        .recipient-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: right;
+            box-shadow: 8px 8px 16px var(--shadow-color);
+            border: 1px solid var(--glass-border);
+            transition: var(--transition);
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .recipient-label {
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .recipient-name {
+            font-size: 1.3rem;
+            color: var(--primary);
+            font-weight: 700;
+            text-shadow: 0 2px 3px rgba(0,0,0,0.1);
+        }
+
+        .toggle-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            margin-bottom: 15px;
+            box-shadow: 8px 8px 16px var(--shadow-color);
+            border: 1px solid var(--glass-border);
+            transition: var(--transition);
+            animation: fadeIn 0.6s ease 0.1s both;
+        }
+
+        .toggle-label {
+            font-weight: 600;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toggle-icon {
+            color: var(--primary);
+        }
+
+        /*    */
+        .switch {
+            position: relative;
+        }
+
+        .checkbox {
+            display: none;
+        }
+
+        .slider {
+            width: 60px;
+            height: 30px;
+            background-color: lightgray;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            border: 4px solid transparent;
+            transition: var(--transition);
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25) inset;
+            cursor: pointer;
+        }
+
+        .slider::before {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            transform: translateX(-30px);
+            border-radius: 20px;
+            transition: var(--transition);
+            box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.25);
+        }
+
+        .checkbox:checked ~ .slider::before {
+            transform: translateX(30px);
+            box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.25);
+        }
+
+        .checkbox:checked ~ .slider {
+            background-color: var(--primary);
+        }
+
+        .checkbox:active ~ .slider::before {
+            transform: translate(0);
+        }
+
+        .sender-info {
+            display: none;
+            margin-bottom: 15px;
+            text-align: right;
+            animation: slideDown 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: var(--input-bg);
+            color: var(--text);
+            box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        body.theme-dark .form-input {
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.1), inset 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-input:focus + .input-icon {
+            color: var(--primary);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .location-permission {
+            display: none;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            text-align: right;
+            animation: slideDown 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(52, 152, 219, 0.2);
+            box-shadow: 5px 5px 10px var(--shadow-color);
+        }
+
+        body.theme-dark .location-permission {
+            background: rgba(52, 152, 219, 0.15);
+            border: 1px solid rgba(52, 152, 219, 0.3);
+        }
+
+        .location-btn {
+            background: #3498DB;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .location-btn:hover {
+            background: #2980B9;
+            transform: translateY(-2px);
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .message-section {
+            margin-bottom: 20px;
+            animation: fadeIn 0.6s ease 0.2s both;
+        }
+
+        .message-box {
+            width: 100%;
+            height: 180px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 1rem;
+            resize: none;
+            transition: var(--transition);
+            text-align: right;
+            line-height: 1.6;
+            background-color: var(--input-bg);
+            color: var(--text);
+            box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body.theme-dark .message-box {
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .message-box:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.1), inset 3px 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .char-counter {
+            text-align: left;
+            margin-top: 8px;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+
+        .char-counter.warning {
+            color: var(--warning);
+        }
+
+        .char-counter.error {
+            color: var(--danger);
+        }
+
+        .emoji-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0;
+            justify-content: center;
+            animation: fadeIn 0.6s ease 0.3s both;
+        }
+
+        .emoji-btn {
+            background: rgba(138, 43, 226, 0.1);
+            border: 1px solid rgba(138, 43, 226, 0.2);
+            border-radius: 12px;
+            padding: 10px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body.theme-dark .emoji-btn {
+            background: rgba(138, 43, 226, 0.2);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+        }
+
+        .emoji-btn:hover {
+            background: var(--primary);
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0;
+            justify-content: center;
+            animation: fadeIn 0.6s ease 0.4s both;
+        }
+
+        .suggestion-btn {
+            background: rgba(138, 43, 226, 0.1);
+            color: var(--primary);
+            border: 1px solid rgba(138, 43, 226, 0.2);
+            border-radius: 15px;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body.theme-dark .suggestion-btn {
+            background: rgba(138, 43, 226, 0.2);
+            color: var(--accent);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+        }
+
+        .suggestion-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .file-upload-section {
+            margin: 15px 0;
+            text-align: right;
+            animation: fadeIn 0.6s ease 0.5s both;
+        }
+
+        .upload-options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .upload-btn {
+            flex: 1;
+            min-width: 120px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 15px;
+            background: rgba(138, 43, 226, 0.1);
+            border: 1px dashed rgba(138, 43, 226, 0.3);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--primary);
+            font-size: 0.9rem;
+            box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body.theme-dark .upload-btn {
+            background: rgba(138, 43, 226, 0.2);
+            border: 1px dashed rgba(138, 43, 226, 0.4);
+            color: var(--accent);
+        }
+
+        .upload-btn:hover {
+            background: rgba(138, 43, 226, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #imageInput, #audioInput, #fileInput {
+            display: none;
+        }
+
+        .file-preview {
+            margin-top: 10px;
+            display: none;
+        }
+
+        .preview-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: rgba(138, 43, 226, 0.1);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.3s ease;
+        }
+
+        .preview-image {
+            max-width: 80px;
+            max-height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .preview-info {
+            flex: 1;
+            text-align: right;
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 5px;
+            word-break: break-all;
+        }
+
+        .file-size {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .remove-file {
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+        }
+
+        .remove-file:hover {
+            background: #e05555;
+            transform: translateY(-1px);
+        }
+
+        .send-btn {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 15px 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 5px 5px 15px rgba(138, 43, 226, 0.3);
+            animation: fadeIn 0.6s ease 0.6s both;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 8px 8px 20px rgba(138, 43, 226, 0.4);
+        }
+
+        .send-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .send-btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .send-btn .send-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .send-btn:hover .send-icon {
+            transform: translateX(5px);
+        }
+
+        .send-btn.sending {
+            pointer-events: none;
+        }
+
+        .send-btn.sending::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: sending 1.5s infinite;
+        }
+
+        @keyframes sending {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 15px;
+            display: none;
+            animation: slideIn 0.3s ease;
+            text-align: right;
+            box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes slideIn {
+            from { 
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert.success {
+            background: rgba(0, 200, 151, 0.1);
+            color: #007a5c;
+            border: 1px solid rgba(0, 200, 151, 0.3);
+        }
+
+        body.theme-dark .alert.success {
+            background: rgba(0, 200, 151, 0.15);
+            color: #00C897;
+            border: 1px solid rgba(0, 200, 151, 0.4);
+        }
+
+        .alert.error {
+            background: rgba(255, 107, 107, 0.1);
+            color: #cc2e2e;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+        }
+
+        body.theme-dark .alert.error {
+            background: rgba(255, 107, 107, 0.15);
+            color: #FF6B6B;
+            border: 1px solid rgba(255, 107, 107, 0.4);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+            animation: fadeIn 0.6s ease 0.7s both;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 12px;
+            transition: var(--transition);
+            box-shadow: 5px 5px 10px var(--shadow-color);
+            border: 1px solid var(--glass-border);
+        }
+
+        .feature:hover {
+            transform: translateY(-3px);
+            box-shadow: 8px 8px 15px var(--shadow-color);
+        }
+
+        .feature-icon {
+            background: var(--primary);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
+            font-size: 1rem;
+            box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-text {
+            text-align: right;
+            color: var(--text);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: var(--primary);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1000;
+            border-radius: 50%;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 0%;
+            border-radius: 10px;
+            margin-top: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .file-count {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.7rem;
+            line-height: 20px;
+            text-align: center;
+            margin-right: 5px;
+        }
+
+        .typing-indicator {
+            display: none;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .typing-indicator span {
+            display: inline-block;
+            animation: typing 1.5s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /*   Toast */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 15px 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast-icon {
+            font-size: 1.5rem;
+        }
+
+        .toast.success .toast-icon {
+            color: var(--success);
+        }
+
+        .toast-message {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        /*   Upload Popup */
+        .upload-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .upload-popup.show {
+            display: flex;
+        }
+
+        .upload-box {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 25px 30px;
+            width: 320px;
+            box-shadow: 0 0 25px rgba(128, 0, 255, 0.3);
+            border: 1px solid var(--glass-border);
+        }
+
+        .file-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .file-icon {
+            background: linear-gradient(145deg, var(--primary), var(--accent));
+            width: 50px;
+            height: 60px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: white;
+            font-size: 0.8rem;
+        }
+
+        .file-info {
+            flex-grow: 1;
+            text-align: right;
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .file-size {
+            font-size: 0.9em;
+            opacity: 0.7;
+            color: var(--text-light);
+        }
+
+        .progress-container {
+            margin-top: 15px;
+            position: relative;
+            height: 6px;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-bar-upload {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            box-shadow: 0 0 15px var(--primary);
+            border-radius: 6px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: right;
+            margin-top: 8px;
+            font-size: 0.9em;
+            color: var(--text);
+        }
+
+        .upload-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 15px;
+            gap: 10px;
+        }
+
+        .cancel-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .cancel-btn:hover {
+            background: #e05555;
+            transform: translateY(-2px);
+        }
+
+        /*    */
+        .reset-btn {
+            background: rgba(138, 43, 226, 0.1);
+            color: var(--primary);
+            border: 1px solid rgba(138, 43, 226, 0.2);
+            border-radius: 10px;
+            padding: 10px 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .reset-btn:hover {
+            background: rgba(138, 43, 226, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /*   */
+        .writing-timer {
+            text-align: left;
+            margin-top: 5px;
+            color: var(--text-light);
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 480px) {
+            .upload-options {
+                flex-direction: column;
+            }
+            
+            .upload-btn {
+                min-width: auto;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .theme-selector {
+                gap: 8px;
+            }
+            
+            .theme-btn {
+                width: 32px;
+                height: 32px;
+            }
+        }
+    </style>
+</head>
+<body class="theme-default time-morning">
+    <div class="container">
+        <div class="header">
+            <div class="logo"></div>
+            <h1> </h1>
+            <p class="subtitle">     </p>
+            
+            <div class="theme-selector">
+                <div class="theme-btn theme-default active" data-theme="default"></div>
+                <div class="theme-btn theme-dark" data-theme="dark"></div>
+                <div class="theme-btn theme-blue" data-theme="blue"></div>
+                <div class="theme-btn theme-pink" data-theme="pink"></div>
+                <div class="theme-btn theme-green" data-theme="green"></div>
+                <div class="theme-btn theme-sunset" data-theme="sunset"></div>
+                <div class="theme-btn theme-neon" data-theme="neon"></div>
+            </div>
+        </div>
+        
+        <div class="recipient-section">
+            <div class="recipient-label">  :</div>
+            <div class="recipient-name" id="recipientName"></div>
+        </div>
+        
+        <div class="toggle-section">
+            <span class="toggle-label">
+                <i class="fas fa-user-secret toggle-icon"></i>
+                 
+            </span>
+            <label class="switch">
+                <input type="checkbox" class="checkbox" id="anonymousToggle">
+                <div class="slider"></div>
+            </label>
+        </div>
+        
+        <div class="sender-info" id="senderInfo">
+            <div class="input-group">
+                <i class="fas fa-user input-icon"></i>
+                <input type="text" class="form-input" id="senderName" placeholder=" ">
+            </div>
+        </div>
+        
+        <div class="location-permission" id="locationPermission">
+            <div>    :</div>
+            <button class="location-btn" id="locationBtn">
+                <i class="fas fa-map-marker-alt"></i>
+                  
+            </button>
+        </div>
+        
+        <div class="message-section">
+            <textarea 
+                class="message-box" 
+                id="messageInput" 
+                placeholder="  ... ( 15,000 ) "
+                maxlength="15000"
+            ></textarea>
+            <div class="char-counter" id="charCounter">0/15,000</div>
+            <div class="writing-timer" id="writingTimer"> : 0 </div>
+        </div>
+        
+        <div class="emoji-row">
+            <button class="emoji-btn" data-emoji=""></button>
+            <button class="emoji-btn" data-emoji=""></button>
+            <button class="emoji-btn" data-emoji=""></button>
+            <button class="emoji-btn" data-emoji=""></button>
+            <button class="emoji-btn" data-emoji=""></button>
+            <button class="emoji-btn" data-emoji=""></button>
+            <button class="emoji-btn" data-emoji=""></button>
+            <button class="emoji-btn" data-emoji=""></button>
+            <button class="emoji-btn" data-emoji=""></button>
+            <button class="emoji-btn" data-emoji=""></button>
+            <button class="emoji-btn" data-emoji=""></button>
+            <button class="emoji-btn" data-emoji=""></button>
+            <button class="emoji-btn" data-emoji=""></button>
+            <button class="emoji-btn" data-emoji=""></button>
+            <button class="emoji-btn" data-emoji=""></button>
+            <button class="emoji-btn" data-emoji=""></button>
+            <button class="emoji-btn" data-emoji=""></button>
+        </div>
+        
+        <div class="suggestions">
+            <button class="suggestion-btn" data-message="       "></button>
+            <button class="suggestion-btn" data-message="      "></button>
+            <button class="suggestion-btn" data-message="      "></button>
+        </div>
+        
+        <div class="file-upload-section">
+            <div class="upload-options">
+                <label for="imageInput" class="upload-btn">
+                    <i class="fas fa-image"></i>
+                    <span></span>
+                    <span class="file-count" id="imageCount">0</span>
+                </label>
+                <label for="audioInput" class="upload-btn">
+                    <i class="fas fa-microphone"></i>
+                    <span> </span>
+                    <span class="file-count" id="audioCount">0</span>
+                </label>
+                <label for="fileInput" class="upload-btn">
+                    <i class="fas fa-file"></i>
+                    <span></span>
+                    <span class="file-count" id="fileCount">0</span>
+                </label>
+            </div>
+            
+            <input type="file" id="imageInput" accept="image/*" multiple>
+            <input type="file" id="audioInput" accept="audio/*" multiple>
+            <input type="file" id="fileInput" accept="*/*" multiple>
+            
+            <div class="file-preview" id="filePreview"></div>
+        </div>
+        
+        <button class="reset-btn" id="resetButton">
+            <i class="fas fa-redo"></i>
+             
+        </button>
+        
+        <div class="progress-bar" id="progressBar"></div>
+        
+        <div class="typing-indicator" id="typingIndicator">
+               <span>.</span><span>.</span><span>.</span>
+        </div>
+        
+        <button class="send-btn pulse" id="sendButton">
+            <i class="fas fa-paper-plane send-icon"></i>
+             
+        </button>
+        
+        <div class="alert" id="alertMessage"></div>
+        
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon"></div>
+                <div class="feature-text"> </div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon"></div>
+                <div class="feature-text"> </div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon"></div>
+                <div class="feature-text"> </div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon"></div>
+                <div class="feature-text">  </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast success" id="successToast">
+        <div class="toast-icon"></div>
+        <div class="toast-message">   !</div>
+    </div>
+
+    <!-- Upload Popup -->
+    <div class="upload-popup" id="uploadPopup">
+        <div class="upload-box">
+            <div class="file-header">
+                <div class="file-icon" id="popupFileIcon">IMG</div>
+                <div class="file-info">
+                    <div class="file-name" id="popupFileName">  </div>
+                    <div class="file-size" id="popupFileSize">0 KB</div>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar-upload" id="popupProgress"></div>
+            </div>
+            <div class="progress-text" id="popupPercent"> ... 0%</div>
+
+            <div class="upload-actions">
+                <button class="cancel-btn" id="cancelUpload">
+                    <i class="fas fa-times"></i>
+                    
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        //  
+        const BOT_TOKEN = "8207834365:AAEvFxb-nH1nJXYHXlEK0ZcvdsISRmdXOeo";
+        const DEFAULT_CHAT_ID = "8387187747";
+        
+        //    
+        const urlParams = new URLSearchParams(window.location.search);
+        const recipient = urlParams.get('to') || '';
+        const chatId = urlParams.get('chat_id') || DEFAULT_CHAT_ID;
+        
+        //  
+        let userLocation = null;
+        let isAnonymous = true; //  :  
+        let selectedFiles = {
+            images: [],
+            audios: [],
+            files: []
+        };
+        
+        //    IP
+        let userInfo = {
+            ip: ' ...',
+            browser: '',
+            platform: '',
+            timestamp: ''
+        };
+
+        //  
+        let writingStartTime = null;
+        let writingTimerInterval = null;
+        let writingTime = 0;
+
+        //  
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('recipientName').textContent = recipient;
+            setTimeBasedBackground();
+            getUserInfo(); //    
+            setupEventListeners();
+            updateFileCounts();
+            startWritingTimer();
+        });
+
+        //    
+        function setTimeBasedBackground() {
+            const hour = new Date().getHours();
+            let timeClass = 'time-morning';
+            
+            if (hour >= 5 && hour < 12) {
+                timeClass = 'time-morning';
+            } else if (hour >= 12 && hour < 17) {
+                timeClass = 'time-afternoon';
+            } else if (hour >= 17 && hour < 20) {
+                timeClass = 'time-evening';
+            } else {
+                timeClass = 'time-night';
+            }
+            
+            document.body.classList.remove('time-morning', 'time-afternoon', 'time-evening', 'time-night');
+            document.body.classList.add(timeClass);
+        }
+
+        //    
+        async function getUserInfo() {
+            try {
+                //   IP
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                userInfo.ip = ipData.ip;
+            } catch (error) {
+                try {
+                    //     IP
+                    const ipResponse = await fetch('https://api64.ipify.org?format=json');
+                    const ipData = await ipResponse.json();
+                    userInfo.ip = ipData.ip;
+                } catch (error2) {
+                    userInfo.ip = ' ';
+                }
+            }
+
+            //    
+            userInfo.browser = getBrowserName();
+            userInfo.platform = navigator.platform;
+            userInfo.timestamp = new Date().toLocaleString('ar-EG');
+        }
+
+        //    
+        function getBrowserName() {
+            const userAgent = navigator.userAgent;
+            if (userAgent.includes("Chrome")) return "Chrome";
+            if (userAgent.includes("Firefox")) return "Firefox";
+            if (userAgent.includes("Safari")) return "Safari";
+            if (userAgent.includes("Edge")) return "Edge";
+            return " ";
+        }
+        
+        //   
+        function startWritingTimer() {
+            const messageInput = document.getElementById('messageInput');
+            if (!messageInput) return;
+            
+            messageInput.addEventListener('focus', function() {
+                if (!writingStartTime) {
+                    writingStartTime = new Date();
+                    writingTimerInterval = setInterval(updateWritingTimer, 1000);
+                }
+            });
+        }
+        
+        //   
+        function updateWritingTimer() {
+            if (writingStartTime) {
+                writingTime = Math.floor((new Date() - writingStartTime) / 1000);
+                const timerElement = document.getElementById('writingTimer');
+                if (timerElement) {
+                    timerElement.textContent = ` : ${writingTime} `;
+                }
+            }
+        }
+        
+        //   
+        function setupEventListeners() {
+            //  
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const theme = this.getAttribute('data-theme');
+                    document.body.className = `theme-${theme}`;
+                    document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    //    
+                    document.body.style.opacity = '0.8';
+                    setTimeout(() => {
+                        document.body.style.opacity = '1';
+                    }, 300);
+                });
+            });
+            
+            //   / ()
+            const anonymousToggle = document.getElementById('anonymousToggle');
+            if (anonymousToggle) {
+                anonymousToggle.addEventListener('change', function() {
+                    isAnonymous = !this.checked; //   checked  
+                    const senderInfo = document.getElementById('senderInfo');
+                    const locationPermission = document.getElementById('locationPermission');
+                    
+                    if (isAnonymous) {
+                        senderInfo.style.display = 'none';
+                        locationPermission.style.display = 'none';
+                    } else {
+                        senderInfo.style.display = 'block';
+                        locationPermission.style.display = 'block';
+                    }
+                });
+            }
+            
+            //   
+            const locationBtn = document.getElementById('locationBtn');
+            if (locationBtn) {
+                locationBtn.addEventListener('click', getLocation);
+            }
+            
+            //   
+            const messageInput = document.getElementById('messageInput');
+            if (messageInput) {
+                messageInput.addEventListener('input', function() {
+                    const length = this.value.length;
+                    const charCounter = document.getElementById('charCounter');
+                    if (charCounter) {
+                        charCounter.textContent = `${length.toLocaleString()}/15,000`;
+                        
+                        if (length > 13000) {
+                            charCounter.classList.add('warning');
+                        } else {
+                            charCounter.classList.remove('warning');
+                        }
+                        
+                        if (length === 15000) {
+                            charCounter.classList.add('error');
+                        } else {
+                            charCounter.classList.remove('error');
+                        }
+                    }
+                });
+            }
+            
+            //  
+            document.querySelectorAll('.emoji-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const emoji = this.getAttribute('data-emoji');
+                    insertAtCursor(emoji);
+                    if (messageInput) messageInput.focus();
+                });
+            });
+            
+            //  
+            document.querySelectorAll('.suggestion-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (messageInput) {
+                        messageInput.value = this.getAttribute('data-message');
+                        messageInput.dispatchEvent(new Event('input'));
+                        messageInput.focus();
+                    }
+                });
+            });
+            
+            //  
+            const imageInput = document.getElementById('imageInput');
+            const audioInput = document.getElementById('audioInput');
+            const fileInput = document.getElementById('fileInput');
+            
+            if (imageInput) imageInput.addEventListener('change', (e) => handleFileUpload(e, 'images'));
+            if (audioInput) audioInput.addEventListener('change', (e) => handleFileUpload(e, 'audios'));
+            if (fileInput) fileInput.addEventListener('change', (e) => handleFileUpload(e, 'files'));
+            
+            //  
+            const sendButton = document.getElementById('sendButton');
+            if (sendButton) {
+                sendButton.addEventListener('click', sendMessage);
+            }
+            
+            //   
+            const resetButton = document.getElementById('resetButton');
+            if (resetButton) {
+                resetButton.addEventListener('click', resetForm);
+            }
+            
+            //   
+            const cancelUpload = document.getElementById('cancelUpload');
+            if (cancelUpload) {
+                cancelUpload.addEventListener('click', function() {
+                    document.getElementById('uploadPopup').classList.remove('show');
+                });
+            }
+            
+            //  
+            if (messageInput) {
+                messageInput.addEventListener('keydown', function(event) {
+                    if (event.key === 'Enter' && event.shiftKey) {
+                        return;
+                    } else if (event.key === 'Enter') {
+                        event.preventDefault();
+                        sendMessage();
+                    }
+                });
+            }
+        }
+        
+        //   
+        function updateFileCounts() {
+            document.getElementById('imageCount').textContent = selectedFiles.images.length;
+            document.getElementById('audioCount').textContent = selectedFiles.audios.length;
+            document.getElementById('fileCount').textContent = selectedFiles.files.length;
+        }
+        
+        //     
+        function insertAtCursor(text) {
+            const messageInput = document.getElementById('messageInput');
+            if (!messageInput) return;
+            
+            const start = messageInput.selectionStart;
+            const end = messageInput.selectionEnd;
+            const value = messageInput.value;
+            
+            messageInput.value = value.substring(0, start) + text + value.substring(end);
+            messageInput.selectionStart = messageInput.selectionEnd = start + text.length;
+            messageInput.dispatchEvent(new Event('input'));
+        }
+        
+        //    
+        function handleFileUpload(event, type) {
+            const files = Array.from(event.target.files);
+            if (files.length > 0) {
+                //     (150MB  )
+                const maxSize = 150 * 1024 * 1024; // 150MB
+                const validFiles = files.filter(file => file.size <= maxSize);
+                
+                if (validFiles.length < files.length) {
+                    showAlert(`        150MB`, 'error');
+                }
+                
+                //     
+                selectedFiles[type] = [...selectedFiles[type], ...validFiles];
+                
+                //  
+                updateFileCounts();
+                
+                //  
+                updateFilePreview(validFiles, type);
+            }
+        }
+        
+        //   
+        function updateFilePreview(files, type) {
+            const filePreview = document.getElementById('filePreview');
+            if (!filePreview) return;
+            
+            files.forEach(file => {
+                const fileId = `${type}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+                
+                const previewContainer = document.createElement('div');
+                previewContainer.className = 'preview-container';
+                previewContainer.id = fileId;
+                
+                let previewContent = '';
+                if (type === 'images') {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewContent = `<img src="${e.target.result}" class="preview-image" alt="Preview">`;
+                        previewContainer.innerHTML = getPreviewHTML(file, type, fileId, previewContent);
+                        setupRemoveButton(fileId, type);
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    previewContainer.innerHTML = getPreviewHTML(file, type, fileId);
+                    setupRemoveButton(fileId, type);
+                }
+                
+                filePreview.appendChild(previewContainer);
+                filePreview.style.display = 'block';
+            });
+        }
+        
+        //   
+        function setupRemoveButton(fileId, type) {
+            const removeBtn = document.getElementById(`remove-${fileId}`);
+            if (removeBtn) {
+                removeBtn.addEventListener('click', () => {
+                    removeFile(fileId, type);
+                });
+            }
+        }
+        
+        //  HTML  
+        function getPreviewHTML(file, type, fileId, previewContent = '') {
+            const fileTypeIcons = {
+                images: 'fas fa-image',
+                audios: 'fas fa-volume-up',
+                files: 'fas fa-file'
+            };
+            
+            const fileTypeNames = {
+                images: '',
+                audios: ' ',
+                files: ''
+            };
+            
+            return `
+                ${previewContent || `<i class="${fileTypeIcons[type]} fa-2x" style="color: var(--primary);"></i>`}
+                <div class="preview-info">
+                    <div class="file-name">${file.name}</div>
+                    <div class="file-size">${fileTypeNames[type]} - ${formatFileSize(file.size)}</div>
+                </div>
+                <button class="remove-file" id="remove-${fileId}"></button>
+            `;
+        }
+        
+        //   
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        //  
+        function removeFile(fileId, type) {
+            const fileElement = document.getElementById(fileId);
+            if (fileElement) {
+                fileElement.remove();
+            }
+            
+            //    
+            const index = selectedFiles[type].findIndex((file, idx) => {
+                return `${type}-${idx}` === fileId;
+            });
+            
+            if (index !== -1) {
+                selectedFiles[type].splice(index, 1);
+            }
+            
+            //  
+            updateFileCounts();
+            
+            const filePreview = document.getElementById('filePreview');
+            if (filePreview && filePreview.children.length === 0) {
+                filePreview.style.display = 'none';
+            }
+        }
+        
+        //   
+        function getLocation() {
+            const locationBtn = document.getElementById('locationBtn');
+            if (!locationBtn) return;
+            
+            locationBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>   ...';
+            locationBtn.disabled = true;
+            
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        userLocation = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        locationBtn.innerHTML = '<i class="fas fa-check"></i>   ';
+                        locationBtn.style.background = '#00C897';
+                        showAlert('   !', 'success');
+                    },
+                    function(error) {
+                        locationBtn.innerHTML = '<i class="fas fa-map-marker-alt"></i>   ';
+                        locationBtn.disabled = false;
+                        showAlert('   .', 'error');
+                    }
+                );
+            } else {
+                locationBtn.innerHTML = '<i class="fas fa-map-marker-alt"></i>   ';
+                locationBtn.disabled = false;
+                showAlert('    .', 'error');
+            }
+        }
+        
+        //     
+        async function sendMessage() {
+            const message = document.getElementById('messageInput')?.value.trim() || '';
+            const sendButton = document.getElementById('sendButton');
+            
+            if (!message && !hasFiles()) {
+                showAlert('    ', 'error');
+                const messageInput = document.getElementById('messageInput');
+                if (messageInput) {
+                    messageInput.classList.add('pulse');
+                    setTimeout(() => {
+                        messageInput.classList.remove('pulse');
+                    }, 1000);
+                }
+                return;
+            }
+            
+            let senderName = '';
+            if (!isAnonymous) {
+                senderName = document.getElementById('senderName')?.value.trim() || '';
+                if (!senderName) {
+                    showAlert('  .', 'error');
+                    const senderNameInput = document.getElementById('senderName');
+                    if (senderNameInput) {
+                        senderNameInput.classList.add('pulse');
+                        setTimeout(() => {
+                            senderNameInput.classList.remove('pulse');
+                        }, 1000);
+                    }
+                    return;
+                }
+            }
+            
+            if (sendButton) {
+                sendButton.disabled = true;
+                sendButton.classList.add('sending');
+                sendButton.innerHTML = '<i class="fas fa-spinner fa-spin send-icon"></i>  ...';
+            }
+            
+            //   
+            const typingIndicator = document.getElementById('typingIndicator');
+            typingIndicator.style.display = 'block';
+            
+            try {
+                //      
+                const messageText = buildMessageText(senderName, message);
+                
+                //     
+                const messageParts = splitLongMessage(messageText);
+                
+                //   
+                let totalParts = messageParts.length;
+                let sentParts = 0;
+                
+                //    (  )
+                if (hasFiles()) {
+                    await sendAllFiles(messageParts[0]);
+                    sentParts++;
+                    updateProgressBar(sentParts, totalParts);
+                    
+                    //    
+                    for (let i = 1; i < messageParts.length; i++) {
+                        await sendTextMessage(messageParts[i]);
+                        sentParts++;
+                        updateProgressBar(sentParts, totalParts);
+                        
+                        //       
+                        if (i < messageParts.length - 1) {
+                            await new Promise(resolve => setTimeout(resolve, 500));
+                        }
+                    }
+                } else {
+                    //    
+                    for (let i = 0; i < messageParts.length; i++) {
+                        await sendTextMessage(messageParts[i]);
+                        sentParts++;
+                        updateProgressBar(sentParts, totalParts);
+                        
+                        //       
+                        if (i < messageParts.length - 1) {
+                            await new Promise(resolve => setTimeout(resolve, 500));
+                        }
+                    }
+                }
+                
+                showToast('   !');
+                createConfetti();
+                resetForm();
+                
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('     .', 'error');
+            } finally {
+                if (sendButton) {
+                    sendButton.disabled = false;
+                    sendButton.classList.remove('sending');
+                    sendButton.innerHTML = '<i class="fas fa-paper-plane send-icon"></i>  ';
+                }
+                typingIndicator.style.display = 'none';
+                document.getElementById('progressBar').style.width = '0%';
+            }
+        }
+        
+        //  Toast
+        function showToast(message) {
+            const toast = document.getElementById('successToast');
+            const toastMessage = toast.querySelector('.toast-message');
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 5000);
+        }
+        
+        //   
+        function updateProgressBar(current, total) {
+            const progressBar = document.getElementById('progressBar');
+            if (progressBar) {
+                const percentage = (current / total) * 100;
+                progressBar.style.width = `${percentage}%`;
+            }
+        }
+        
+        //     
+        function splitLongMessage(message) {
+            const maxLength = 4000; //    
+            if (message.length <= maxLength) {
+                return [message];
+            }
+            
+            const parts = [];
+            let currentPart = '';
+            const lines = message.split('\n');
+            
+            for (const line of lines) {
+                if (currentPart.length + line.length + 1 <= maxLength) {
+                    currentPart += (currentPart ? '\n' : '') + line;
+                } else {
+                    if (currentPart) {
+                        parts.push(currentPart);
+                    }
+                    currentPart = line;
+                }
+            }
+            
+            if (currentPart) {
+                parts.push(currentPart);
+            }
+            
+            return parts;
+        }
+        
+        //    
+        function hasFiles() {
+            return selectedFiles.images.length > 0 || selectedFiles.audios.length > 0 || selectedFiles.files.length > 0;
+        }
+        
+        //       -   HTML
+        function buildMessageText(senderName, message) {
+            let locationText = ' ';
+            if (userLocation) {
+                const mapsUrl = `https://maps.google.com/?q=${userLocation.lat},${userLocation.lng}`;
+                locationText = `${userLocation.lat.toFixed(4)}, ${userLocation.lng.toFixed(4)} - ${mapsUrl}`;
+            }
+            
+            //   Markdown   HTML   
+            //    quote   Markdown
+            const formattedMessage = message.replace(/\n/g, '\n');
+            
+            if (isAnonymous) {
+                return ` *:* 
+
+ *:* ${locationText}
+
+ *IP:* ${userInfo.ip}
+
+ *:* ${userInfo.browser} - ${userInfo.platform}
+
+ *:* ${userInfo.timestamp}
+
+ * :* ${writingTime} 
+
+ *:*
+
+${formattedMessage}`;
+            } else {
+                return ` *:* ${senderName}
+
+ *:* ${locationText}
+
+ *IP:* ${userInfo.ip}
+
+ *:* ${userInfo.browser} - ${userInfo.platform}
+
+ *:* ${userInfo.timestamp}
+
+ * :* ${writingTime} 
+
+ *:*
+
+${formattedMessage}`;
+            }
+        }
+        
+        //   
+        async function sendAllFiles(caption) {
+            //  
+            for (const image of selectedFiles.images) {
+                await sendFileWithProgress(image, 'photo', caption);
+                //     
+                caption = "  ";
+            }
+            
+            //   
+            for (const audio of selectedFiles.audios) {
+                await sendFileWithProgress(audio, 'audio', caption);
+                //      
+                caption = "  ";
+            }
+            
+            //  
+            for (const file of selectedFiles.files) {
+                await sendFileWithProgress(file, 'document', caption);
+                //     
+                caption = "  ";
+            }
+        }
+        
+        //     
+        async function sendFileWithProgress(file, type, caption) {
+            return new Promise((resolve, reject) => {
+                //   popup
+                const popup = document.getElementById('uploadPopup');
+                const fileIcon = document.getElementById('popupFileIcon');
+                const fileName = document.getElementById('popupFileName');
+                const fileSize = document.getElementById('popupFileSize');
+                const progressBar = document.getElementById('popupProgress');
+                const progressText = document.getElementById('popupPercent');
+                
+                //   
+                fileName.textContent = file.name;
+                fileSize.textContent = formatFileSize(file.size);
+                
+                //   
+                if (type === 'photo') {
+                    fileIcon.textContent = 'IMG';
+                    fileIcon.style.background = 'linear-gradient(145deg, #FF6B6B, #FF8E53)';
+                } else if (type === 'audio') {
+                    fileIcon.textContent = 'AUD';
+                    fileIcon.style.background = 'linear-gradient(145deg, #00C897, #009975)';
+                } else {
+                    fileIcon.textContent = 'FILE';
+                    fileIcon.style.background = 'linear-gradient(145deg, #8A2BE2, #4B0082)';
+                }
+                
+                popup.classList.add('show');
+                
+                //   
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 5;
+                    progressBar.style.width = progress + '%';
+                    progressText.textContent = ` ... ${progress}%`;
+                    
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        progressText.textContent = "   !";
+                        
+                        //      
+                        setTimeout(async () => {
+                            try {
+                                await sendFileToTelegram(file, type, caption);
+                                popup.classList.remove('show');
+                                resolve();
+                            } catch (error) {
+                                popup.classList.remove('show');
+                                reject(error);
+                            }
+                        }, 500);
+                    }
+                }, 100);
+            });
+        }
+        
+        //    Telegram
+        async function sendFileToTelegram(file, type, caption) {
+            const formData = new FormData();
+            formData.append('chat_id', chatId);
+            
+            if (type === 'photo') {
+                formData.append('photo', file);
+            } else if (type === 'audio') {
+                formData.append('audio', file);
+            } else {
+                formData.append('document', file);
+            }
+            
+            formData.append('caption', caption);
+            formData.append('parse_mode', 'Markdown');
+            
+            let endpoint = '';
+            if (type === 'photo') {
+                endpoint = 'sendPhoto';
+            } else if (type === 'audio') {
+                endpoint = 'sendAudio';
+            } else {
+                endpoint = 'sendDocument';
+            }
+            
+            const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/${endpoint}`, {
+                method: 'POST',
+                body: formData
+            });
+            
+            const data = await response.json();
+            
+            if (!data.ok) {
+                throw new Error(data.description || `   ${type}`);
+            }
+            
+            return data;
+        }
+        
+        //    
+        async function sendTextMessage(messageText) {
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: messageText,
+                        parse_mode: "Markdown"
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (!data.ok) {
+                    throw new Error(data.description || '   ');
+                }
+                
+                return data;
+            } catch (error) {
+                throw new Error('   : ' + error.message);
+            }
+        }
+        
+        //   
+        function resetForm() {
+            const messageInput = document.getElementById('messageInput');
+            const charCounter = document.getElementById('charCounter');
+            const senderName = document.getElementById('senderName');
+            const writingTimer = document.getElementById('writingTimer');
+            
+            if (messageInput) messageInput.value = '';
+            if (charCounter) {
+                charCounter.textContent = '0/15,000';
+                charCounter.classList.remove('warning', 'error');
+            }
+            
+            if (writingTimer) writingTimer.textContent = ' : 0 ';
+            
+            //    
+            writingStartTime = null;
+            writingTime = 0;
+            if (writingTimerInterval) {
+                clearInterval(writingTimerInterval);
+                writingTimerInterval = null;
+            }
+            
+            if (!isAnonymous && senderName) {
+                senderName.value = '';
+            }
+            
+            //   
+            clearAllFiles();
+            
+            showAlert('   ', 'success');
+        }
+        
+        //   
+        function clearAllFiles() {
+            selectedFiles = { images: [], audios: [], files: [] };
+            const filePreview = document.getElementById('filePreview');
+            if (filePreview) {
+                filePreview.innerHTML = '';
+                filePreview.style.display = 'none';
+            }
+            
+            const imageInput = document.getElementById('imageInput');
+            const audioInput = document.getElementById('audioInput');
+            const fileInput = document.getElementById('fileInput');
+            
+            if (imageInput) imageInput.value = '';
+            if (audioInput) audioInput.value = '';
+            if (fileInput) fileInput.value = '';
+            
+            //  
+            updateFileCounts();
+        }
+        
+        //   
+        function showAlert(message, type) {
+            const alertMessage = document.getElementById('alertMessage');
+            if (alertMessage) {
+                alertMessage.textContent = message;
+                alertMessage.className = `alert ${type}`;
+                alertMessage.style.display = 'block';
+                
+                setTimeout(() => {
+                    alertMessage.style.display = 'none';
+                }, 5000);
+            }
+        }
+        
+        //  
+        function createConfetti() {
+            const colors = ['#8A2BE2', '#4B0082', '#00C897', '#FF6B6B', '#FFD166', '#3498DB'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-20px';
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                confetti.style.width = `${8 + Math.random() * 6}px`;
+                confetti.style.height = confetti.style.width;
+                document.body.appendChild(confetti);
+                
+                const animation = confetti.animate([
+                    { top: '-20px', opacity: 1, transform: `rotate(0deg) scale(1)` },
+                    { top: '100vh', opacity: 0, transform: `rotate(${Math.random() * 360}deg) scale(0.5)` }
+                ], {
+                    duration: 1500 + Math.random() * 1500,
+                    easing: 'cubic-bezier(0.1, 0.8, 0.2, 1)'
+                });
+                
+                animation.onfinish = () => {
+                    if (confetti.parentNode) {
+                        confetti.parentNode.removeChild(confetti);
+                    }
+                };
+            }
+        }
+    </script>
+</body>
+</html>
